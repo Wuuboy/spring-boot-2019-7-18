@@ -1,0 +1,1 @@
+update parking_lot set status = 'selled';
