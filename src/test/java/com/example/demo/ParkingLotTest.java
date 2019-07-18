@@ -43,6 +43,18 @@ public class ParkingLotTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(new Gson().toJson(expectResult, List.class)));
     }
-
+    @Test
+    public void should_return_update_count_when_update_capacity() throws Exception {
+        Gson gson = new Gson();
+        ParkingLot parkingLot = new ParkingLot("parkingLotB ",12,"zha");
+        ParkingLot expectParkingLot = new ParkingLot("parkingLotB ",24,"zha");
+        mvc.perform(put("/parkingLots",1)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(parkingLot))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(gson.toJson(expectParkingLot)));
+    }
 
 }

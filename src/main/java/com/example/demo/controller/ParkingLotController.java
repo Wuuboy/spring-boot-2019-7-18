@@ -18,9 +18,9 @@ public class ParkingLotController {
         return parkingLotService.getParkingLots(page,pageSize);
     }
 
-//    @PutMapping("/parkingLots/{id}")
-//    public int updateParkingLot(@RequestParam("id")Long id){
-//        return parkingLotService.
-//    }
+    @PutMapping("/parkingLots/{id}")
+    public ParkingLot updateParkingLot(@PathVariable("id")Long id,@RequestBody ParkingLot parkingLot){
+        return parkingLotService.updateParkingLot(id,parkingLot);
+    }
 
 }
