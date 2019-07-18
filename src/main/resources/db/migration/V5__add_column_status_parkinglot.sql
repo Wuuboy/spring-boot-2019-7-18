@@ -1,0 +1,1 @@
+alter table parking_lot add column status varchar(10);
