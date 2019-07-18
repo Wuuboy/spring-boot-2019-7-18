@@ -1,0 +1,1 @@
+insert into parking_lot(name,capacity,location)values('parkinglotA',12,'zha');
