@@ -1,0 +1,1 @@
+alter table parking_lot add constraint UK_Capacity check(capacity >10);
