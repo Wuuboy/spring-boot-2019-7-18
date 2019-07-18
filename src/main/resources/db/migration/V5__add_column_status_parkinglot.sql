@@ -1,1 +1,1 @@
-alter table parking_lot add column status varchar(10);
+alter table parking_lot add status varchar(10);
