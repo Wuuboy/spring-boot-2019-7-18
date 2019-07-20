@@ -28,4 +28,9 @@ public class ParkingLotController {
         return parkingLotService.getParkingLot(id);
     }
 
+    @DeleteMapping("/parkingLots/{id}")
+    public void deleteParkingLot(@PathVariable("id")Long id) throws Exception {
+        parkingLotService.deleteParkingLot(id);
+    }
+
 }

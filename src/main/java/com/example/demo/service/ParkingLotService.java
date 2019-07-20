@@ -36,4 +36,9 @@ public class ParkingLotService {
     public ParkingLot getParkingLot(Long id) {
         return (ParkingLot) parkingLotRepository.findAllById(Collections.singleton(id));
     }
+
+    public void deleteParkingLot(Long id) throws Exception {
+        parkingLotRepository.deleteById(id);
+        throw new Exception();
+    }
 }
