@@ -32,4 +32,8 @@ public class ParkingLotService {
         }
         return parkingLotRepository.saveAndFlush(parkingLot1);
     }
+
+    public ParkingLot getParkingLot(Long id) {
+        return (ParkingLot) parkingLotRepository.findAllById(Collections.singleton(id));
+    }
 }

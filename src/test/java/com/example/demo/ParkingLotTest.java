@@ -2,14 +2,19 @@ package com.example.demo;
 
 import com.example.demo.modle.ParkingLot;
 import com.example.demo.repository.ParkingLotRepository;
+import com.example.demo.service.ParkingLotService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,6 +33,12 @@ public class ParkingLotTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private ParkingLotService parkingLotService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void should_return_parking_lots_when_get_page_and_pageSize() throws Exception {
@@ -55,6 +66,19 @@ public class ParkingLotTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(gson.toJson(expectParkingLot)));
+    }
+
+    @Test
+    public void should_return_parkingLot_when_request_by_id() throws Exception {
+
+        ParkingLot parkingLotExpected = new ParkingLot("ParkingLotA",23,"zha");
+        parkingLotExpected.setId((long) 1);
+
+        given(parkingLotService.getParkingLot((long) 1))
+                .willReturn(parkingLotExpected);
+
+        mvc.perform(get("/parkingLots/1"))
+                .andExpect(content().string(objectMapper.writeValueAsString(parkingLotExpected)));
     }
 
 }

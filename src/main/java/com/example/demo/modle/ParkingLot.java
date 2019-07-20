@@ -16,6 +16,10 @@ public class ParkingLot {
     public ParkingLot() {
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public ParkingLot(String name, Integer capacity, String location) {
         this.name = name;
         this.capacity = capacity;

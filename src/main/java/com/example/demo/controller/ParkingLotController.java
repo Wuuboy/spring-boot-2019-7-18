@@ -13,7 +13,7 @@ public class ParkingLotController {
     @Autowired
     private ParkingLotService parkingLotService;
 
-    @GetMapping(value = "/parkinglots",params = {"page","pageSize"})
+    @GetMapping(value = "/parkingLots",params = {"page","pageSize"})
     public List<ParkingLot> getParkingLots(@PathVariable(name = "page")Integer page,@PathVariable("pageSize")Integer pageSize){
         return parkingLotService.getParkingLots(page,pageSize);
     }
@@ -21,6 +21,11 @@ public class ParkingLotController {
     @PutMapping("/parkingLots/{id}")
     public ParkingLot updateParkingLot(@PathVariable("id")Long id,@RequestBody ParkingLot parkingLot){
         return parkingLotService.updateParkingLot(id,parkingLot);
+    }
+
+    @GetMapping("/parkingLots/{id}")
+    public ParkingLot getParkingLot(@PathVariable("id")Long id){
+        return parkingLotService.getParkingLot(id);
     }
 
 }
