@@ -14,7 +14,7 @@ public class ParkingLotController {
     private ParkingLotService parkingLotService;
 
     @GetMapping(value = "/parkingLots",params = {"page","pageSize"})
-    public List<ParkingLot> getParkingLots(@PathVariable(name = "page")Integer page,@PathVariable("pageSize")Integer pageSize){
+    public List<ParkingLot> getParkingLots(@RequestParam(name = "page")Integer page,@RequestParam("pageSize")Integer pageSize){
         return parkingLotService.getParkingLots(page,pageSize);
     }
 
