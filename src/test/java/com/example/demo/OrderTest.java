@@ -1,9 +1,11 @@
 package com.example.demo;
 
+import com.example.demo.exception.NotEnoughCapacityException;
 import com.example.demo.modle.Order;
 import com.example.demo.modle.ParkingLot;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ParkingLotService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.weaver.ast.Or;
 import org.junit.Test;
@@ -72,5 +74,24 @@ public class OrderTest {
         mvc.perform(post("/orders/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(objectMapper.writeValueAsString(order)));
+    }
+
+    @Test
+    public void should_return_exception_message_when_add_bad_order() throws Exception {
+        Order order1  = new Order("20190720","C888888",new Date().getTime());
+        Order order2  = new Order("20190720","C888888",new Date().getTime());
+        order2.setId((long) 2);
+        ParkingLot parkingLot = new ParkingLot("aaa", 10, "ccc");
+        parkingLot.setId((long) 1);
+        order2.setParkingLot(parkingLot);
+
+        given(orderService.addOrder((long) 1,order1))
+                .willThrow(new NotEnoughCapacityException("停车场已满"));
+
+        mvc.perform(post("/orders/parkingLots/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(order1)))
+                .andExpect(content().string("停车场已满"));
     }
 }
