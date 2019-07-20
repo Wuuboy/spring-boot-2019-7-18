@@ -56,16 +56,17 @@ public class ParkingLotTest {
     }
     @Test
     public void should_return_update_count_when_update_capacity() throws Exception {
-        Gson gson = new Gson();
-        ParkingLot parkingLot = new ParkingLot("parkingLotB ",12,"zha");
-        ParkingLot expectParkingLot = new ParkingLot("parkingLotB ",24,"zha");
-        mvc.perform(put("/parkingLots",1)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(parkingLot))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(gson.toJson(expectParkingLot)));
+        ParkingLot parkingLotExpected = new ParkingLot("parkingLotB ",12,"zha");
+        parkingLotExpected.setId((long) 2);
+
+        ParkingLot parkingLotpdated= new ParkingLot("parkingLotB ",23,"zha");
+        parkingLotExpected.setId((long) 2);
+
+        given(parkingLotService.updateParkingLot((long) 2,parkingLotpdated))
+        .willReturn(parkingLotExpected);
+
+        mvc.perform(put("/parkingLots/2",parkingLotpdated))
+                .andExpect(content().string(objectMapper.writeValueAsString(parkingLotExpected)));
     }
 
     @Test
