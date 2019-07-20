@@ -56,4 +56,21 @@ public class OrderTest {
                 .content(objectMapper.writeValueAsString(order1)))
                 .andExpect(content().string(objectMapper.writeValueAsString(order2)));
     }
+
+    @Test
+    public void should_return_cahnged_order_when_order_status_is_distoyed() throws Exception {
+        Order order  = new Order("20190720","C888888",new Date().getTime());
+        order.setId((long) 1);
+        order.setEndTime(new Date().getTime());
+        ParkingLot parkingLot = new ParkingLot("ParkingLotA",23,"zha");
+        parkingLot.setId((long) 1);
+
+
+        given(orderService.updateStatus((long) 1))
+                .willReturn(order);
+
+        mvc.perform(post("/orders/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().string(objectMapper.writeValueAsString(order)));
+    }
 }

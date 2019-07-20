@@ -32,4 +32,12 @@ public class OrderService {
         }
         return (Order) orderRepository.save(order);
     }
+
+    public Order updateStatus(Long id) {
+        Order order = (Order) orderRepository.findById(id).orElse(null);
+        order.setOrderStatus("DESTROYED");
+        ParkingLot parkingLot = order.getParkingLot();
+        parkingLot.setCapacity(parkingLot.getCapacity()+1);
+        return (Order) orderRepository.save(order);
+    }
 }
